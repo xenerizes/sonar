@@ -6,13 +6,14 @@
 
 namespace json {
 
-struct json {
+struct Json {
+    Json() noexcept = default;
     template <class T>
-    explicit json(const T& t) : object(std::make_any<T>(t)) { }
+    explicit Json(const T& t) : object(std::make_any<T>(t)) { }
 
     std::any object;
 };
 
-json parse(const std::string& in);
+Json parse(const std::string& in);
 
 } // ns json
