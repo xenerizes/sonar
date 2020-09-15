@@ -9,6 +9,12 @@ TEST(ParseValue, Int) {
 
     EXPECT_TRUE(parsed.object.has_value());
     EXPECT_EQ(10, std::any_cast<int>(parsed.object));
+
+    in = " 10   ";
+    parsed = json::parse(in);
+
+    EXPECT_TRUE(parsed.object.has_value());
+    EXPECT_EQ(10, std::any_cast<int>(parsed.object));
 }
 
 TEST(ParseValue, String) {
@@ -17,6 +23,13 @@ TEST(ParseValue, String) {
 
     EXPECT_TRUE(parsed.object.has_value());
     EXPECT_TRUE(nullptr != std::any_cast<std::string>(&parsed.object));
+    EXPECT_EQ(std::string("string"), std::any_cast<std::string>(parsed.object));
+
+    in = "   \"string\"      ";
+    parsed = json::parse(in);
+    EXPECT_TRUE(parsed.object.has_value());
+    EXPECT_TRUE(nullptr != std::any_cast<std::string>(&parsed.object));
+    EXPECT_EQ(std::string("string"), std::any_cast<std::string>(parsed.object));
 }
 
 } // ns test

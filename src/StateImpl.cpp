@@ -11,6 +11,9 @@ StatePtr StateStart::next()
 std::optional<Token> StateStart::parseToken(Source& s, std::string& token_str)
 {
     auto c = s.getChar();
+    while (c.has_value() && std::isspace(c.value())) {
+        c = s.getChar();
+    }
     if (!c) return std::nullopt;
     switch (c.value()) {
         case '\"':
