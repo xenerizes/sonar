@@ -6,12 +6,22 @@
 
 namespace json {
 
-struct Json {
-    Json() noexcept = default;
-    template <class T>
-    explicit Json(const T& t) : object(std::make_any<T>(t)) { }
+enum class ValueType {
+    Empty = 0,
+    String,
+    Integer,
+    Boolean,
+};
 
-    std::any object;
+struct Json {
+    Json();
+
+    explicit Json(const std::string& t);
+    explicit Json(int t);
+    explicit Json(bool t);
+
+    ValueType type;
+    std::any value;
 };
 
 Json parse(const std::string& in);

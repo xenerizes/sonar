@@ -4,6 +4,25 @@
 
 namespace json {
 
+Json::Json()
+    : type(ValueType::Empty)
+{ }
+
+Json::Json(const std::string& t)
+    : type(ValueType::String)
+    , value(t)
+{ }
+
+Json::Json(int t)
+    : type(ValueType::Integer)
+    , value(t)
+{ }
+
+Json::Json(bool t)
+    : type(ValueType::Boolean)
+    , value(t)
+{ }
+
 Json parse(const std::string& in)
 {
     Scanner scanner(in);
