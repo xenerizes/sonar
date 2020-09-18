@@ -32,4 +32,19 @@ TEST(ParseValue, String) {
     EXPECT_EQ(std::string("string"), std::any_cast<std::string>(parsed.object));
 }
 
+TEST(ParseValue, Bool) {
+    auto in = "true";
+    auto parsed = json::parse(in);
+
+    EXPECT_TRUE(parsed.object.has_value());
+    EXPECT_TRUE(nullptr != std::any_cast<bool>(&parsed.object));
+    EXPECT_EQ(true, std::any_cast<bool>(parsed.object));
+
+    in = "   false      ";
+    parsed = json::parse(in);
+    EXPECT_TRUE(parsed.object.has_value());
+    EXPECT_TRUE(nullptr != std::any_cast<bool>(&parsed.object));
+    EXPECT_EQ(false, std::any_cast<bool>(parsed.object));
+}
+
 } // ns test

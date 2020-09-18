@@ -19,6 +19,11 @@ std::optional<Token> StateStart::parseToken(Source& s, std::string& token_str)
         case '\"':
             n = std::make_unique<StateString>();
             break;
+        case 't':
+        case 'f':
+            token_str += c.value();
+            n = std::make_unique<StateBool>();
+            break;
         default:
             token_str += c.value();
             n = std::make_unique<StateInt>();
@@ -62,6 +67,25 @@ std::optional<Token> StateString::parseToken(json::Source& s, std::string& token
         token_str += c.value();
     }
     return Token(TokenType::STR, token_str);
+}
+
+StatePtr StateBool::next()
+{
+    return std::make_unique<StateFin>();
+}
+
+std::optional<Token> StateBool::parseToken(json::Source& s, std::string& token_str)
+{
+    for (auto c = s.getChar(); c.has_value() && std::isalpha(c.value()); c = s.getChar()) {
+        token_str += c.value();
+    }
+    if (token_str == "true") {
+        return Token(TokenType::TRUE, token_str);
+    }
+    if (token_str == "false") {
+        return Token(TokenType::FALSE, token_str);
+    }
+    throw std::invalid_argument("Unknown boolean value");
 }
 
 } // ns json

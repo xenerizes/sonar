@@ -22,6 +22,10 @@ Json parse(const std::string& in)
             }
         case TokenType::STR:
             return Json(t.value().value);
+        case TokenType::TRUE:
+            return Json(true);
+        case TokenType::FALSE:
+            return Json(false);
     }
     return {};
 }
