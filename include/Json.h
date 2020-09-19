@@ -63,7 +63,7 @@ using JsonValuePtr = std::unique_ptr<JsonValue>;
 
 struct Json {
     Json();
-    Json(ValueType t, JsonValuePtr val);
+    explicit Json(JsonValuePtr val);
     ~Json() = default;
 
     Json(Json&&) = default;

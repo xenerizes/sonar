@@ -12,7 +12,7 @@ Json parse(const std::string& in)
         case TokenType::INT:
             try {
                 auto integer = std::stoi(t.value().value);
-                return Json(ValueType::Integer, std::make_unique<JsonNumber>(integer));
+                return Json(std::make_unique<JsonNumber>(integer));
             } catch (std::invalid_argument&) {
                 throw std::invalid_argument("Could not convert to integer: " +
                                             t.value().value);
@@ -20,11 +20,11 @@ Json parse(const std::string& in)
                 throw std::out_of_range("Integer out of range");
             }
         case TokenType::STR:
-            return Json(ValueType::String, std::make_unique<JsonString>(t.value().value));
+            return Json(std::make_unique<JsonString>(t.value().value));
         case TokenType::TRUE:
-            return Json(ValueType::Boolean, std::make_unique<JsonBoolean>(true));
+            return Json(std::make_unique<JsonBoolean>(true));
         case TokenType::FALSE:
-            return Json(ValueType::Boolean, std::make_unique<JsonBoolean>(false));
+            return Json(std::make_unique<JsonBoolean>(false));
     }
     return {};
 }

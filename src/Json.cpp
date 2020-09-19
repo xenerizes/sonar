@@ -8,8 +8,8 @@ Json::Json()
     : type(ValueType::Empty)
 { }
 
-Json::Json(ValueType t, JsonValuePtr val)
-    : type(t)
+Json::Json(JsonValuePtr val)
+    : type(val ? val->type : ValueType::Empty)
     , valuePtr(std::move(val))
 { }
 
