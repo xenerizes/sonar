@@ -1,4 +1,5 @@
 add_library(sonar
+    Parser.cpp
     Json.cpp
     Token.cpp
     Scanner.cpp
