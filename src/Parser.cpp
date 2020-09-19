@@ -17,6 +17,8 @@ Json parse(const std::string& in)
             return Json(std::make_unique<JsonString>(t.value()));
         case TokenType::BOOL:
             return Json(std::make_unique<JsonBoolean>(t.value()));
+        case TokenType::ARR:
+            return Json(std::make_unique<JsonArray>());
     }
     return {};
 }

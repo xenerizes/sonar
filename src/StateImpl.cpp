@@ -28,6 +28,10 @@ std::optional<Token> StateStart::parseToken(Source& s, std::string& token_str)
             token_str += c.value();
             n = std::make_unique<StateNull>();
             break;
+
+        case '[':
+            n = std::make_unique<StateArray>();
+            break;
         case '-':
         default:
             token_str += c.value();
@@ -98,6 +102,18 @@ std::optional<Token> StateNull::parseToken(json::Source& s, std::string& token_s
         token_str += c.value();
     }
     return Token(TokenType::NULLT, token_str);
+}
+
+StatePtr StateArray::next()
+{
+    return std::make_unique<StateFin>();
+}
+
+std::optional<Token> StateArray::parseToken(json::Source& s, std::string& token_str)
+{
+    for (auto c = s.getChar(); c.has_value() && ']' != c; c = s.getChar()) {
+    }
+    return Token(TokenType::ARR, token_str);
 }
 
 } // ns json

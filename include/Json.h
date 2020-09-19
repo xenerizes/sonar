@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <any>
+#include <vector>
 #include <utility>
 #include <memory>
 #include <stdexcept>
@@ -14,6 +14,7 @@ enum class ValueType {
     String,
     Integer,
     Boolean,
+    Array,
 };
 
 struct Token;
@@ -25,6 +26,8 @@ struct JsonValue {
 
     ValueType type;
 };
+
+using JsonValuePtr = std::unique_ptr<JsonValue>;
 
 struct JsonNull : public JsonValue {
     explicit JsonNull(const Token& t);
@@ -48,7 +51,11 @@ struct JsonString : public JsonValue {
     std::string value;
 };
 
-using JsonValuePtr = std::unique_ptr<JsonValue>;
+struct JsonArray : public JsonValue {
+    JsonArray() : JsonValue(ValueType::Array) { }
+
+    std::vector<JsonValuePtr> arr;
+};
 
 struct Json {
     Json();
