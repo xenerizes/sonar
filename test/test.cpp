@@ -70,11 +70,16 @@ TEST(ParseValue, Bool) {
 
     in = "\n   false\n      ";
     parsed = json::parse(in);
+
     EXPECT_FALSE(parsed.empty());
     EXPECT_EQ(parsed.type, json::ValueType::Boolean);
     EXPECT_NO_THROW(parsed.access<json::JsonBoolean>());
     EXPECT_ANY_THROW(parsed.access<json::JsonString>());
     EXPECT_EQ(false, parsed.access<json::JsonBoolean>().value);
+
+    in = " future ";
+
+    EXPECT_THROW(parsed = json::parse(in), std::invalid_argument);
 }
 
 } // ns test
