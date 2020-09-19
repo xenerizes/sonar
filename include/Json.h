@@ -30,7 +30,7 @@ struct JsonValue {
 using JsonValuePtr = std::unique_ptr<JsonValue>;
 
 struct JsonNull : public JsonValue {
-    explicit JsonNull(const Token& t);
+    JsonNull() : JsonValue(ValueType::Null) { }
 };
 
 struct JsonNumber : public JsonValue {
