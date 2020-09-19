@@ -79,13 +79,10 @@ std::optional<Token> StateBool::parseToken(json::Source& s, std::string& token_s
     for (auto c = s.getChar(); c.has_value() && std::isalpha(c.value()); c = s.getChar()) {
         token_str += c.value();
     }
-    if (token_str == "true") {
-        return Token(TokenType::TRUE, token_str);
+    if (token_str == "true" || token_str == "false") {
+        return Token(TokenType::BOOL, token_str);
     }
-    if (token_str == "false") {
-        return Token(TokenType::FALSE, token_str);
-    }
-    throw std::invalid_argument("Unknown boolean value");
+    throw std::invalid_argument("Unknown boolean value: " + token_str);
 }
 
 } // ns json

@@ -15,6 +15,8 @@ enum class ValueType {
     Boolean,
 };
 
+struct Token;
+
 struct JsonValue {
     JsonValue() : type(ValueType::Empty) { }
     explicit JsonValue(ValueType t) : type(t) { }
@@ -24,37 +26,19 @@ struct JsonValue {
 };
 
 struct JsonNumber : public JsonValue {
-    template <class T, typename std::enable_if<
-        std::is_integral_v<std::decay_t<T>>, T>::type = 0>
-    explicit JsonNumber(T in)
-        : JsonValue(ValueType::Integer)
-        , value(in)
-    { }
+    explicit JsonNumber(const Token& t);
 
     int value;
 };
 
 struct JsonBoolean : public JsonValue {
-    template <class T, typename std::enable_if<
-        std::is_integral_v<std::decay_t<T>>, T>::type = 0>
-    explicit JsonBoolean(T in)
-        : JsonValue(ValueType::Boolean)
-        , value(in)
-    { }
+    explicit JsonBoolean(const Token& t);
 
     bool value;
 };
 
 struct JsonString : public JsonValue {
-    explicit JsonString(const char* in)
-    : JsonValue(ValueType::String)
-    , value(in)
-    { }
-
-    explicit JsonString(std::string in)
-        : JsonValue(ValueType::String)
-        , value(std::move(in))
-    { }
+    explicit JsonString(const Token& t);
 
     std::string value;
 };

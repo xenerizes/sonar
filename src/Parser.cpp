@@ -10,21 +10,11 @@ Json parse(const std::string& in)
     if (!t.has_value()) return {};
     switch (t.value().type) {
         case TokenType::INT:
-            try {
-                auto integer = std::stoi(t.value().value);
-                return Json(std::make_unique<JsonNumber>(integer));
-            } catch (std::invalid_argument&) {
-                throw std::invalid_argument("Could not convert to integer: " +
-                                            t.value().value);
-            } catch (std::out_of_range&) {
-                throw std::out_of_range("Integer out of range");
-            }
+            return Json(std::make_unique<JsonNumber>(t.value()));
         case TokenType::STR:
-            return Json(std::make_unique<JsonString>(t.value().value));
-        case TokenType::TRUE:
-            return Json(std::make_unique<JsonBoolean>(true));
-        case TokenType::FALSE:
-            return Json(std::make_unique<JsonBoolean>(false));
+            return Json(std::make_unique<JsonString>(t.value()));
+        case TokenType::BOOL:
+            return Json(std::make_unique<JsonBoolean>(t.value()));
     }
     return {};
 }
