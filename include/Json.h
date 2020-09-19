@@ -69,8 +69,8 @@ struct Json {
     Json(Json&&) = default;
     Json& operator=(Json&&) = default;
 
-    template<class T>//, std::enable_if_t<
-        //std::is_base_of_v<JsonValue, std::decay_t<T>>, T> = 0>
+    template<class T, typename std::enable_if<
+        std::is_base_of_v<JsonValue, std::decay_t<T>>, T>::type* = nullptr>
     const std::decay_t<T>& access() const
     {
         if (empty()) {
