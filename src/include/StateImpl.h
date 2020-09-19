@@ -33,4 +33,9 @@ struct StateBool final : public State {
     StatePtr next() override;
 };
 
+struct StateNull final : public State {
+    std::optional<Token> parseToken(Source& s, std::string& token_str) override;
+    StatePtr next() override;
+};
+
 } // ns json

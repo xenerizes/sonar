@@ -4,6 +4,10 @@
 
 namespace json {
 
+JsonNull::JsonNull(const json::Token& t)
+    : JsonValue(ValueType::Null)
+{ }
+
 JsonNumber::JsonNumber(const json::Token& t)
     : JsonValue(ValueType::Integer)
     , value(std::stoi(t.value))

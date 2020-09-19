@@ -10,6 +10,7 @@ namespace json {
 
 enum class ValueType {
     Empty = 0,
+    Null,
     String,
     Integer,
     Boolean,
@@ -23,6 +24,10 @@ struct JsonValue {
     virtual ~JsonValue() = default;
 
     ValueType type;
+};
+
+struct JsonNull : public JsonValue {
+    explicit JsonNull(const Token& t);
 };
 
 struct JsonNumber : public JsonValue {

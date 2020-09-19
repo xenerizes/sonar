@@ -19,6 +19,25 @@ TEST(ParseValue, Empty) {
     EXPECT_ANY_THROW(parsed.access<json::JsonString>());
 }
 
+TEST(ParseValue, Null) {
+    auto in = "null";
+    auto parsed = json::parse(in);
+
+    EXPECT_FALSE(parsed.empty());
+    EXPECT_EQ(parsed.type, json::ValueType::Null);
+    EXPECT_NO_THROW(parsed.access<json::JsonNull>());
+    EXPECT_ANY_THROW(parsed.access<json::JsonString>());
+
+    in = "     \t\nnull    \n";
+    parsed = json::parse(in);
+
+    EXPECT_FALSE(parsed.empty());
+    EXPECT_TRUE(parsed.valuePtr);
+    EXPECT_EQ(parsed.type, json::ValueType::Null);
+    EXPECT_NO_THROW(parsed.access<json::JsonNull>());
+    EXPECT_ANY_THROW(parsed.access<json::JsonString>());
+}
+
 TEST(ParseValue, Int) {
     auto in = "10";
     auto parsed = json::parse(in);

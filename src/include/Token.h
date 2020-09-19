@@ -5,6 +5,7 @@
 namespace json {
 
 enum class TokenType {
+    NULLT,    // null
     STR,    // string
     INT,    // integer
     BOOL,   // boolean

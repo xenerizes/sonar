@@ -9,6 +9,8 @@ Json parse(const std::string& in)
     auto t = scanner.getToken();
     if (!t.has_value()) return {};
     switch (t.value().type) {
+        case TokenType::NULLT:
+            return Json(std::make_unique<JsonNull>(t.value()));
         case TokenType::INT:
             return Json(std::make_unique<JsonNumber>(t.value()));
         case TokenType::STR:

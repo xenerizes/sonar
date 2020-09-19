@@ -24,6 +24,10 @@ std::optional<Token> StateStart::parseToken(Source& s, std::string& token_str)
             token_str += c.value();
             n = std::make_unique<StateBool>();
             break;
+        case 'n':
+            token_str += c.value();
+            n = std::make_unique<StateNull>();
+            break;
         case '-':
         default:
             token_str += c.value();
@@ -81,6 +85,19 @@ std::optional<Token> StateBool::parseToken(json::Source& s, std::string& token_s
         token_str += c.value();
     }
     return Token(TokenType::BOOL, token_str);
+}
+
+StatePtr StateNull::next()
+{
+    return std::make_unique<StateFin>();
+}
+
+std::optional<Token> StateNull::parseToken(json::Source& s, std::string& token_str)
+{
+    for (auto c = s.getChar(); c.has_value() && std::isalpha(c.value()); c = s.getChar()) {
+        token_str += c.value();
+    }
+    return Token(TokenType::NULLT, token_str);
 }
 
 } // ns json
