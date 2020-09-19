@@ -29,14 +29,14 @@ TEST(ParseValue, Int) {
     EXPECT_ANY_THROW(parsed.access<json::JsonString>());
     EXPECT_EQ(10, parsed.access<json::JsonNumber>().value);
 
-    in = "\n 10   \n\n\t\n";
+    in = "\n -10   \n\n\t\n";
     parsed = json::parse(in);
 
     EXPECT_FALSE(parsed.empty());
     EXPECT_EQ(parsed.type, json::ValueType::Integer);
     EXPECT_NO_THROW(parsed.access<json::JsonNumber>());
     EXPECT_ANY_THROW(parsed.access<json::JsonString>());
-    EXPECT_EQ(10, parsed.access<json::JsonNumber>().value);
+    EXPECT_EQ(-10, parsed.access<json::JsonNumber>().value);
 }
 
 TEST(ParseValue, String) {

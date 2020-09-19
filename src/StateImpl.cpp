@@ -24,6 +24,7 @@ std::optional<Token> StateStart::parseToken(Source& s, std::string& token_str)
             token_str += c.value();
             n = std::make_unique<StateBool>();
             break;
+        case '-':
         default:
             token_str += c.value();
             n = std::make_unique<StateInt>();
